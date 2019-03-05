@@ -79,7 +79,7 @@ public class LoginPage {
         passwordTxt.sendKeys(loginData.getPassword());
         loginBtn.click();
 
-        //
+        //Проверка всплывающего алерта...
         try {
 
             Alert alert = wd.switchTo().alert();
