@@ -75,10 +75,10 @@ public class LoginPageAppTest
     {
         wd = new ChromeDriver(options);
 
-        LoginData loginData = new LoginData("ppetrov2", "Ppetrov1!");
+        LoginData loginData = new LoginData("ppetrov2", "Ppetr22!");
         LoginPage page = new LoginPage(wd, loginData);
 
-        Assert.assertTrue(page.tryLogin(),"Неверный логин или пароль!!");
+        Assert.assertFalse(page.tryLogin(),"Верный логин и пароль!!");
     }
 
 
