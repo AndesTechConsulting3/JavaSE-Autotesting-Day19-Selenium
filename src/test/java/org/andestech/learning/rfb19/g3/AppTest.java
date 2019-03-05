@@ -13,8 +13,12 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 
 import static org.testng.Assert.assertTrue;
@@ -66,8 +70,19 @@ public class AppTest
                 new Date(logEntry.getTimestamp()),
                 logEntry.getLevel(), logEntry.getMessage())                   );
 
-      //  Files.write(P)
+        List<String> logEntries = new ArrayList<>();
 
+
+        wd.manage().logs().get("performance").getAll().
+                forEach( le -> logEntries.add(le.getMessage()));
+
+
+        try {
+            Files.write(Paths.get("e:\\screens\\log_" + System.currentTimeMillis()
+                            + ".log"),  logEntries);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         assertTrue( true );
     }
