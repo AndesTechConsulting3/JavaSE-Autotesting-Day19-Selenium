@@ -28,37 +28,23 @@ public class LoginPageAppTest
     private WebDriver wd = null;
     private DesiredCapabilities cap = null;
     private ChromeOptions options = null;
-    private LoginPage loginPage = null;
 
-   // @BeforeGroups
+   //@BeforeGroups(groups = "loginTests")
    @BeforeClass
     public void initData(){
     System.setProperty("webdriver.chrome.driver",
             "E:\\drivers\\selenium\\chromedriver.exe");
     System.out.println("+++ Class: " + this);
 
-    // trace perfomance
-    // http://chromedriver.chromium.org/logging/performance-log
-
-        // DesiredCapabilities cap = DesiredCapabilities.chrome();  // ver.1.
-        cap = new DesiredCapabilities();
-        cap.setBrowserName("chrome");
-        LoggingPreferences logPrefs = new LoggingPreferences();
-        logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
-        cap.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
-
         options = new ChromeOptions();
         options.merge(cap);
         options.setBinary("E:\\progs\\chrome-win\\chrome.exe");
         options.addArguments("--user-data-dir="+"C:\\Users\\and\\AppData\\Local\\Chromium\\User Data");
+      //  options.setPageLoadStrategy(PageLoadStrategy.NONE);
+        wd = new ChromeDriver(options);
+   }
 
-       wd = new ChromeDriver(options);
-
-       // options.setPageLoadStrategy(PageLoadStrategy.NONE);
-
-    }
-
-    @Test(groups = "loginTests", priority = -1)
+    @Test(groups = "loginTests", priority = 1)
     public void positiveLoginTest()
     {
         // wd = new ChromeDriver(options);
@@ -72,7 +58,7 @@ public class LoginPageAppTest
 
     }
 
-    @Test(groups = "loginTests", priority = -2)
+    @Test(groups = "loginTests")
     public void negativeLoginTest()
     {
        // wd = new ChromeDriver(options);
