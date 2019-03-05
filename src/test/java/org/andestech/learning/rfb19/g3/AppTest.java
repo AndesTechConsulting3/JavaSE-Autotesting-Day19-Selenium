@@ -63,18 +63,18 @@ public class AppTest
      //   wd.manage().logs().get("browser").getAll().
      //           forEach( (LogEntry logEntry) ->
 
-           wd.manage().logs().get("performance").getAll().
-                   forEach( (LogEntry logEntry) ->
-
-        System.out.printf("%s, level:%s, mess:%s \n",
-                new Date(logEntry.getTimestamp()),
-                logEntry.getLevel(), logEntry.getMessage())                   );
+//           wd.manage().logs().get("performance").getAll().
+//                   forEach( (LogEntry logEntry) ->
+//
+//        System.out.printf("%s, level:%s, mess:%s \n",
+//                new Date(logEntry.getTimestamp()),
+//                logEntry.getLevel(), logEntry.getMessage())                   );
 
         List<String> logEntries = new ArrayList<>();
 
 
         wd.manage().logs().get("performance").getAll().
-                forEach( le -> logEntries.add(le.getMessage()));
+                forEach( le -> logEntries.add(le.getMessage() + "\r\n"));
 
 
         try {
