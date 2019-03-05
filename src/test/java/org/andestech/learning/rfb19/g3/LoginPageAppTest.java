@@ -62,13 +62,23 @@ public class LoginPageAppTest
     {
         wd = new ChromeDriver(options);
 
-        LoginData loginData = new LoginData("ppetrov2", "qwieyiy");
+        LoginData loginData = new LoginData("ppetrov2", "Ppetrov1!");
         LoginPage page = new LoginPage(wd, loginData);
 
         Assert.assertTrue(page.tryLogin(),"Неверный логин или пароль!!");
 
+        Assert.assertTrue(page.tryLogin(),"Неверный логин или пароль!!");
+    }
 
+    @Test
+    public void negativeLoginTest()
+    {
+        wd = new ChromeDriver(options);
 
+        LoginData loginData = new LoginData("ppetrov2", "Ppetrov1!");
+        LoginPage page = new LoginPage(wd, loginData);
+
+        Assert.assertTrue(page.tryLogin(),"Неверный логин или пароль!!");
     }
 
 
