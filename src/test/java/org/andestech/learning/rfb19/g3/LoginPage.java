@@ -1,5 +1,7 @@
 package org.andestech.learning.rfb19.g3;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,10 +16,15 @@ public class LoginPage {
 
     private WebDriver wd;
 
+    public void setLoginData(LoginData loginData)
+    {
+        this.loginData=loginData;
+    }
+
     public LoginPage(WebDriver wd, LoginData loginData) {
         this.wd = wd;
         this.loginData = loginData;
-        wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         wd.get(LOGIN_URL);
 
         PageFactory.initElements(wd, this);
@@ -72,29 +79,24 @@ public class LoginPage {
         passwordTxt.sendKeys(loginData.getPassword());
         loginBtn.click();
 
-        if(header != null)
-        {
-            if(header.getAttribute("innerText").
-                    contains(loginData.getLogin())) return true;
+        //
+        try {
+
+            Alert alert = wd.switchTo().alert();
+            String errorText = alert.getText();
+
+            if (errorText.contains("Неверный"))
+            { alert.accept(); return false;}
+            else {alert.accept();}
         }
+        catch (NoAlertPresentException ex){}
 
-        String errorText = "";
-        errorText = wd.switchTo().alert().getText();
-        if(errorText.contains("Неверный")) return false;
-        else return true;
+        // Проверка заголовка
 
-
-
-
-    }
-
-
+          if(header.getAttribute("innerText").
+                    contains(loginData.getLogin())) return true;
+          else return false;
+   }
 
     private LoginData loginData;
-
-
-
-
-
-
 }

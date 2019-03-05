@@ -11,9 +11,7 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,8 +28,10 @@ public class LoginPageAppTest
     private WebDriver wd = null;
     private DesiredCapabilities cap = null;
     private ChromeOptions options = null;
+    private LoginPage loginPage = null;
 
-    @BeforeClass
+   // @BeforeGroups
+   @BeforeClass
     public void initData(){
     System.setProperty("webdriver.chrome.driver",
             "E:\\drivers\\selenium\\chromedriver.exe");
@@ -52,15 +52,16 @@ public class LoginPageAppTest
         options.setBinary("E:\\progs\\chrome-win\\chrome.exe");
         options.addArguments("--user-data-dir="+"C:\\Users\\and\\AppData\\Local\\Chromium\\User Data");
 
+       wd = new ChromeDriver(options);
 
        // options.setPageLoadStrategy(PageLoadStrategy.NONE);
 
     }
 
-    @Test
+    @Test(groups = "loginTests", priority = -1)
     public void positiveLoginTest()
     {
-        wd = new ChromeDriver(options);
+        // wd = new ChromeDriver(options);
 
         LoginData loginData = new LoginData("ppetrov2", "Ppetrov1!");
         LoginPage page = new LoginPage(wd, loginData);
@@ -68,12 +69,13 @@ public class LoginPageAppTest
         Assert.assertTrue(page.tryLogin(),"Неверный логин или пароль!!");
 
         Assert.assertTrue(page.tryLogin(),"Неверный логин или пароль!!");
+
     }
 
-    @Test
+    @Test(groups = "loginTests", priority = -2)
     public void negativeLoginTest()
     {
-        wd = new ChromeDriver(options);
+       // wd = new ChromeDriver(options);
 
         LoginData loginData = new LoginData("ppetrov2", "Ppetr22!");
         LoginPage page = new LoginPage(wd, loginData);
@@ -83,6 +85,7 @@ public class LoginPageAppTest
 
 
     @Test
+    @Ignore
     public void testCaseChrome01()
     {
 
@@ -103,7 +106,8 @@ public class LoginPageAppTest
     }
 
 
-    @AfterClass
+    //  @AfterGroups
+      @AfterClass
     public void tearDown()
     {
       if(wd != null) wd.quit();
