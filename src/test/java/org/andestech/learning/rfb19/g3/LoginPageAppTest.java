@@ -10,6 +10,7 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -48,16 +49,24 @@ public class LoginPageAppTest
 
         options = new ChromeOptions();
         options.merge(cap);
+        options.setBinary("E:\\progs\\chrome-win\\chrome.exe");
+        options.addArguments("--user-data-dir="+"C:\\Users\\and\\AppData\\Local\\Chromium\\User Data");
 
 
-        options.setPageLoadStrategy(PageLoadStrategy.NONE);
+       // options.setPageLoadStrategy(PageLoadStrategy.NONE);
 
     }
 
     @Test
-    public void loginTest()
+    public void positiveLoginTest()
     {
         wd = new ChromeDriver(options);
+
+        LoginData loginData = new LoginData("ppetrov2", "qwieyiy");
+        LoginPage page = new LoginPage(wd, loginData);
+
+        Assert.assertTrue(page.tryLogin(),"Неверный логин или пароль!!");
+
 
 
     }
