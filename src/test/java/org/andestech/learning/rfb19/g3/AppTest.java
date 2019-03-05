@@ -53,17 +53,18 @@ public class AppTest
     @Test
     public void testCaseChrome01()
     {
+       String jType = "browser";
 
       //  wd = new ChromeDriver(cap);
         wd = new ChromeDriver(options);
-        wd.get("http://google.com");
+        wd.get("http://newsru.com");
 
         wd.manage().logs().getAvailableLogTypes().forEach(t -> System.out.println(t));
 
-     //   wd.manage().logs().get("browser").getAll().
+     //   wd.manage().logs().get(jType).getAll().
      //           forEach( (LogEntry logEntry) ->
 
-//           wd.manage().logs().get("performance").getAll().
+//           wd.manage().logs().get(jType).getAll().
 //                   forEach( (LogEntry logEntry) ->
 //
 //        System.out.printf("%s, level:%s, mess:%s \n",
@@ -73,10 +74,10 @@ public class AppTest
         List<String> logEntries = new ArrayList<>();
 
 
-        wd.manage().logs().get("performance").getAll().
+        wd.manage().logs().get(jType).getAll().
                 forEach( le -> logEntries.add(le.getMessage() + "\r\n"));
 
-
+       // измените на Ваш каталог
         try {
             Files.write(Paths.get("e:\\screens\\log_" + System.currentTimeMillis()
                             + ".log"),  logEntries);
